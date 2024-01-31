@@ -8,6 +8,7 @@ body {
 }
 
 
+
 .layout_padding {
   padding: 75px 0;
 }
@@ -99,6 +100,11 @@ body {
 
 .header_section .nav_container {
   margin: 0 auto;
+}
+
+.header_section .navbar-brand span {
+  font-size: 24px;
+  color: #00ff00;
 }
 
 .custom_nav-container.navbar-expand-lg .navbar-nav .nav-link {
