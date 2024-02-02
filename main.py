@@ -19,7 +19,7 @@ def index():
     return render_template("landing.html.jinja")
 
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route('/register', methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         Username = request.form["username"]
@@ -27,23 +27,37 @@ def register():
         Lastname = request.form["last_name"]
         DOB = request.form["dob"]
         Password = request.form["password"]
-
-    try:
-        with connection.cursor() as cursor:
-            sql = "INSERT INTO User (Username, Firstname, Lastname, DOB, Password) VALUES (%s, %s, %s, %s, %s)"
-            cursor.execute(sql, (Username, Firstname, Lastname, DOB, Password))
-            connection.commit()
-            return redirect(url_for("/"))
-    except Exception as e:
-        # Handle the error, for example, print it
-        print(f"Error during registration: {e}")
-
+        cursor = connection.cursor()
+        sql = "INSERT INTO User (Username, Firstname, Lastname, DOB, Password) VALUES (%s, %s, %s, %s, %s)"
+        cursor.execute(sql, (Username, Firstname, Lastname, DOB, Password))
+        connection.commit()
+        cursor.close()
     return render_template("register.html.jinja")
 
 
-@app.route("/signin")
+@app.route("/signin", methods=["GET", "POST"])
 def signin():
+    if request.method == 'POST':
+        Username = request.form['username']
+        Password = request.form['password']
+        cursor = connection.cursor()
+        
+        sql = "SELECT * From User WHERE Username = %s and Password = %s"
+        cursor.execute(sql, (Username, Password))
+        user = cursor.fetchone()
+        cursor.close()
+        
+        if user:
+            return redirect(url_for('home'))
+        else:
+            return render_template("signin.html.jinja", error="Invalid username or password")
     return render_template("signin.html.jinja")
+
+
+@app.route('/home')
+def home():
+    return render_template('home.html.jinja')
+
 
 
 if __name__ == "__main__":
