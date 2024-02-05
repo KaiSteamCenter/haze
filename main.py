@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
+from pymysql.err import IntegrityError
 import pymysql
 import pymysql.cursors
 
@@ -19,45 +20,46 @@ def index():
     return render_template("landing.html.jinja")
 
 
-@app.route('/register', methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        Username = request.form["username"]
-        Firstname = request.form["first_name"]
-        Lastname = request.form["last_name"]
-        DOB = request.form["dob"]
-        Password = request.form["password"]
-        cursor = connection.cursor()
-        sql = "INSERT INTO User (Username, Firstname, Lastname, DOB, Password) VALUES (%s, %s, %s, %s, %s)"
-        cursor.execute(sql, (Username, Firstname, Lastname, DOB, Password))
-        connection.commit()
-        cursor.close()
+        try:
+            Username = request.form["username"]
+            Firstname = request.form["first_name"]
+            Lastname = request.form["last_name"]
+            DOB = request.form["dob"]
+            Password = request.form["password"]
+            cursor = connection.cursor()
+            sql = "INSERT INTO User (Username, Firstname, Lastname, DOB, Password) VALUES (%s, %s, %s, %s, %s)"
+            cursor.execute(sql, (Username, Firstname, Lastname, DOB, Password))
+            connection.commit()
+            cursor.close()
+        except IntegrityError as e:
+            error_message = "Error: Duplicate username. Please choose another username and try again."
+            return render_template("register.html.jinja", error_message=error_message)
     return render_template("register.html.jinja")
 
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
-    if request.method == 'POST':
-        Username = request.form['username']
-        Password = request.form['password']
+    if request.method == "POST":
+        Username = request.form["username"]
+        Password = request.form["password"]
         cursor = connection.cursor()
-        
         sql = "SELECT * From User WHERE Username = %s and Password = %s"
         cursor.execute(sql, (Username, Password))
         user = cursor.fetchone()
         cursor.close()
-        
         if user:
-            return redirect(url_for('home'))
+            return redirect(url_for("home"))
         else:
             return render_template("signin.html.jinja", error="Invalid username or password")
     return render_template("signin.html.jinja")
 
 
-@app.route('/home')
+@app.route("/home")
 def home():
-    return render_template('home.html.jinja')
-
+    return render_template("home.html.jinja")
 
 
 if __name__ == "__main__":

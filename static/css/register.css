@@ -5921,6 +5921,7 @@ a.badge-dark.focus {
   margin-bottom: 1rem;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+  text-align: center;
 }
 
 .alert-heading {
@@ -6017,6 +6018,7 @@ a.badge-dark.focus {
   color: #721c24;
   background-color: #f8d7da;
   border-color: #f5c6cb;
+  
 }
 
 .alert-danger hr {
