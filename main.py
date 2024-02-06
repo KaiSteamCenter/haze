@@ -1,9 +1,10 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session
 from pymysql.err import IntegrityError
 import pymysql
 import pymysql.cursors
 
 app = Flask(__name__)
+app.secret_key = 'OneLit_3G'
 
 connection = pymysql.connect(
     host="10.100.33.60",
@@ -18,7 +19,6 @@ connection = pymysql.connect(
 @app.route("/")
 def index():
     return render_template("landing.html.jinja")
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -46,14 +46,16 @@ def signin():
         Username = request.form["username"]
         Password = request.form["password"]
         cursor = connection.cursor()
-        sql = "SELECT * From User WHERE Username = %s and Password = %s"
-        cursor.execute(sql, (Username, Password))
+        sql = f"SELECT * From User WHERE Username = '{Username}'"
+        cursor.execute(sql)
         user = cursor.fetchone()
         cursor.close()
-        if user:
+        connection.commit()
+        if user and user['Password'] == Password:
             return redirect(url_for("home"))
         else:
-            return render_template("signin.html.jinja", error="Invalid username or password")
+            error = "Invalid username or password"
+            return render_template("signin.html.jinja", error=error)
     return render_template("signin.html.jinja")
 
 
