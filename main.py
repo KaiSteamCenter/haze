@@ -1,10 +1,26 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for
 from pymysql.err import IntegrityError
 import pymysql
 import pymysql.cursors
+import flask_login
 
 app = Flask(__name__)
-app.secret_key = 'OneLit_3G'
+app.secret_key = "ewbugduihfqwcenp"
+login_manager = flask_login.LoginManager()
+login_manager.init_app(app)
+
+
+class User:
+    is_authenticated = True
+    is_anonymous = False
+    is_active = True
+    def __init__(self, id, username, ProfilePic):
+        self.username = username
+        self.id = id
+        self.pfp = ProfilePic
+        
+    def get_id(self):
+        return str(self.id)
 
 connection = pymysql.connect(
     host="10.100.33.60",
@@ -15,10 +31,22 @@ connection = pymysql.connect(
     cursorclass=pymysql.cursors.DictCursor,
 )
 
+@login_manager.user_loader
+def load_user(user_id):
+    cursor = connection.cursor()
+    cursor.execute("SELECT * From User WHERE ID = " + str(user_id))
+    result = cursor.fetchone()
+    connection.commit()
+    cursor.close()
+    if result is None:
+        return None
+    return User(result["ID"], result["Username"], result["ProfilePic"])
+    
 
 @app.route("/")
 def index():
     return render_template("landing.html.jinja")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -51,7 +79,9 @@ def signin():
         user = cursor.fetchone()
         cursor.close()
         connection.commit()
-        if user and user['Password'] == Password:
+        if user and user["Password"] == Password:
+            user = load_user(user['ID'])
+            flask_login.login_user(user)
             return redirect(url_for("home"))
         else:
             error = "Invalid username or password"
@@ -60,6 +90,7 @@ def signin():
 
 
 @app.route("/home")
+@flask_login.login_required
 def home():
     return render_template("home.html.jinja")
 
