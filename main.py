@@ -45,11 +45,15 @@ def load_user(user_id):
 
 @app.route("/")
 def index():
+    if flask_login.current_user.is_authenticated:
+        return redirect('/home')
     return render_template("landing.html.jinja")
 
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
+    if flask_login.current_user.is_authenticated:
+        return redirect('/home')
     if request.method == "POST":
         try:
             Username = request.form["username"]
@@ -70,6 +74,8 @@ def register():
 
 @app.route("/signin", methods=["GET", "POST"])
 def signin():
+    if flask_login.current_user.is_authenticated:
+        return redirect('/home')
     if request.method == "POST":
         Username = request.form["username"]
         Password = request.form["password"]
@@ -92,7 +98,7 @@ def signin():
 @app.route("/home")
 @flask_login.login_required
 def home():
-    return render_template("home.html.jinja")
+    return flask_login.current_user
 
 
 if __name__ == "__main__":
