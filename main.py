@@ -98,7 +98,8 @@ def signin():
 @app.route("/home")
 @flask_login.login_required
 def home():
-    return flask_login.current_user
+    return render_template("home.html.jinja")
+
 
 
 if __name__ == "__main__":

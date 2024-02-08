@@ -1,7 +1,7 @@
 body {
   font-family: 'Inconsolata', monospace;
   background-color: #000;
-  color: #0f0;
+  color: #5cb85c;
   letter-spacing: 2px;
   line-height: 1.6;
   font-size: 16px;
@@ -201,7 +201,7 @@ a:focus {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #0f0;
+  color: #5cb85c;
 }
 
 
@@ -227,8 +227,8 @@ a:focus {
   display: inline-block;
   padding: 10px 55px;
   background-color: transparent;
-  border: 1px solid #0f0;
-  color: #0f0;
+  border: 1px solid #5cb85c;
+  color: #5cb85c;
   border-radius: 20px 20px 0 20px;
   margin-top: 35px;
   animation: blink 2s infinite;
@@ -236,7 +236,7 @@ a:focus {
 }
 
 .slider_section .detail-box a:hover {
-  background-color: #00ff00;
+  background-color: #5cb85c;
   color: #ffffff;
 }
 

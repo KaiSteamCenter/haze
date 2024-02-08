@@ -68,7 +68,7 @@ body {
   font-size: 1rem;
   font-weight: 400;
   line-height: 1.5;
-  color: #0f0 !important;
+  color: #5cb85c !important;
   text-align: left;
   background-color: #000 !important;
 }
@@ -11791,7 +11791,7 @@ h5,
 
 .login-wrap h3 {
   font-weight: 300;
-  color: #0f0;
+  color: #5cb85c;
   font-size: 22px;
 }
 
@@ -11811,7 +11811,7 @@ h5,
   text-transform: uppercase;
   font-weight: 700;
   font-size: 12px;
-  color: #0f0;
+  color: #5cb85c;
 }
 
 .field-icon {
