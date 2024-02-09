@@ -98,7 +98,12 @@ def signin():
 @app.route("/home")
 @flask_login.login_required
 def home():
-    return render_template("home.html.jinja")
+    cursor = connection.cursor()
+    sql = "SELECT * FROM Posts"
+    cursor.execute(sql)
+    posts = cursor.fetchall()
+    cursor.close()
+    return render_template("home.html.jinja", posts=posts)
 
 
 
