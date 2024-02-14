@@ -99,7 +99,7 @@ def signin():
 @flask_login.login_required
 def home():
     cursor = connection.cursor()
-    sql = "SELECT * FROM Posts"
+    sql = "SELECT * FROM Posts JOIN `User` ON Posts.User_ID = User.ID ORDER BY `timestamp`"
     cursor.execute(sql)
     posts = cursor.fetchall()
     cursor.close()

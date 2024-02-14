@@ -118,7 +118,7 @@
                     <img src="images/profile-pic.png" alt="" />
                     <div>
                         <p>Shahzaib Khan</p>
-                        <small>Public <i class="fa-solid fa-caret-down"></i></small>
+                        <small>Public</small>
                     </div>
                 </div>
 
@@ -138,12 +138,9 @@
                     <div class="user-profile">
                         <img src="static/images/HazeLogo.png" alt="" />
                         <div>
-                            {% for user in Users %}
-                            {% set user_id = post.User_ID %}
-                            {% if user.ID == user_id %}
-                            <p>{{ user.Username }}</p>
-                            {% endif %}
-                            {% endfor %}
+
+                            <p>{{ post.Username }}</p>
+
                             <span>{{ post.Timestamp }}</span>
                         </div>
 
@@ -186,26 +183,14 @@
             <div class="sidebar-title">
                 <h4>Events</h4>
             </div>
-
             <div class="event">
                 <div class="left-event">
-                    <h3>18</h3>
-                    <span>March</span>
+                    <h3>16</h3>
+                    <span>February</span>
                 </div>
                 <div class="right-event">
-                    <h4>Social Media</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Khan Tech Park</p>
-                </div>
-            </div>
-
-            <div class="event">
-                <div class="left-event">
-                    <h3>22</h3>
-                    <span>June</span>
-                </div>
-                <div class="right-event">
-                    <h4>Mobile Marketing</h4>
-                    <p><i class="fas fa-map-marker-alt"></i> Khan Tech Park</p>
+                    <h4>Midwinter Break</h4>
+                    <p><i class="fas fa-map-marker-alt"></i>NYCSchools</p>
                 </div>
             </div>
         </div>
