@@ -5,6 +5,11 @@
     box-sizing: border-box;
 }
 
+a.nav-link:active {
+    color:#626262;
+}
+
+
 :root {
     --body-color:#000;
     --nav-color: #5cb85c;
@@ -149,9 +154,7 @@ nav {
     margin-right: 15px;
 }
 
-.imp-links a:last-child {
-    color: #1876f2;
-}
+
 
 .imp-links {
     border-bottom: 1px solid #ccc;
