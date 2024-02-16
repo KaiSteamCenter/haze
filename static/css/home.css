@@ -350,6 +350,33 @@ nav {
     padding-top: 20px;
 }
 
+#imagePost {
+    width: 50%;
+    border: 50px;
+    outline: 0;
+    border-bottom: 1px solid #ccc;
+    background: transparent;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #626262;
+}
+
+#submitPost {
+    background-color: #5cb85c;
+    height: 50%;
+    width: 100%;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#submitPost:hover {
+    background-color: #4cae4c;
+}
 .post-input-container textarea {
     width: 100%;
     border: 0;

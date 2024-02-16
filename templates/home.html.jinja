@@ -29,7 +29,7 @@
 
         <div class="nav-right">
             <div class="search-box">
-                <img src="images/search.png" alt="zx" />
+                <img src="static/images/search.png" alt="zx" />
                 <input type="text" name="" id="" placeholder="Search" />
             </div>
             <div class="nav-user-icon online" onclick="settingsMenuToggle()">
@@ -92,20 +92,19 @@
         <!-- ---------Left Sidebar ------------ -->
         <div class="left-sidebar">
             <div class="imp-links">
-                <a href="#"><img src="images/news.png" alt="" /> Latest News </a>
-                <a href="#"><img src="images/friends.png" alt="" /> Friends </a>
-                <a href="#"><img src="images/group.png" alt="" /> Group </a>
+                <a href="/home"><img src="static/images/home.png" alt="" /> Home </a>
+                <a href="/profile"><img src="static/images/friends.png" alt="" /> Profile </a>
+                <a href="/settings"><img src="static/images/settings.png" alt="" /> Group </a>
                 <a href="#"><img src="images/marketplace.png" alt="" /> Marketplace
                 </a>
                 <a href="#"><img src="images/watch.png" alt="" /> Watch </a>
-                <a href="#">See More</a>
+                <a href="#"></a>
             </div>
             <div class="shortcut-links">
                 <p>Your Shortcuts</p>
-                <a href="#"><img src="images/shortcut-1.png" alt="" /> Web Developers</a>
-                <a href="#"><img src="images/shortcut-2.png" alt="" /> Web Design Course</a>
-                <a href="#"><img src="images/shortcut-3.png" alt="" /> Full Stack Developers</a>
-                <a href="#"><img src="images/shortcut-4.png" alt="" /> Website Experts</a>
+                <a href="https://steamcenter.app/portal/home"><img src="images/shortcut-1.png" alt="" />Steamcenter</a>
+                <a href="bksteam.schoology.com"><img src="images/shortcut-2.png" alt="" /> Schoology</a>
+
             </div>
         </div>
 
@@ -117,18 +116,22 @@
                 <div class="user-profile">
                     <img src="images/profile-pic.png" alt="" />
                     <div>
-                        <p>Shahzaib Khan</p>
+                        <p>{{ current_user.username }}</p>
                         <small>Public</small>
                     </div>
                 </div>
 
                 <div class="post-input-container">
-                    <textarea rows="3" placeholder="What's on your mind, John?"></textarea>
-                    <div class="add-post-links">
-                        <a href="#"><img src="images/live-video.png" alt="" /> Live Video</a>
-                        <a href="#"><img src="images/photo.png" alt="" /> Photo/Video</a>
-                        <a href="#"><img src="images/feeling.png" alt="" /> feeling/Activity</a>
-                    </div>
+                    <form action="/post" method="POST">
+                        <textarea name="Description" rows="3" placeholder="What's on your mind, {{ current_user.username }}?" required></textarea>
+                        <div class="add-post-links">
+                            <input id="imagePost" type="text" name="Image" placeholder="Image URL">
+                            <button id="submitPost" type="submit">Post</button>
+
+                        </div>
+
+                    </form>
+
                 </div>
 
             </div>
@@ -139,7 +142,7 @@
                         <img src="static/images/HazeLogo.png" alt="" />
                         <div>
 
-                            <p>{{ post.Username }}</p>
+                            <p>@{{ post.Username }}</p>
 
                             <span>{{ post.Timestamp }}</span>
                         </div>
@@ -148,7 +151,6 @@
                     <a href="#"><i class="fa-solid fa-ellipsis-vertical"></i></a>
                 </div>
                 <p class="post-text">{{ post.Description }}</p>
-                <!-- Check if post has an image -->
                 {% if post.Image %}
                 <img class="post-img" src="{{ post.Image }}" alt="" />
                 {% endif %}
@@ -162,7 +164,6 @@
                         <img src="images/profile-pic.png" alt="">
                     </div>
                 </div>
-                <!-- Additional HTML for likes, comments, etc. -->
             </div>
             {% endfor %}
             <img class="post-img" src="images/feed-image-5.png" alt="" />
